@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "default",
+					"enableSsl": "Disabled"
+				},
+				"previewLimit": 50,
+				"server": "mysql-17b7857a-dimapyatnichenko09-cf26.c.aivencloud.com",
+				"port": 24810,
+				"driver": "MySQL",
+				"name": "mysql-17b7857a",
+				"group": "mysql-17b7857a",
+				"username": "avnadmin",
+				"password": "AVNS_xyBV_yQvdZ5WiFJEjnP",
+				"database": "defaultdb"
+			}
+		]
+	}
+}
