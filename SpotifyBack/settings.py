@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p!625ug8+cvcn_5n3!+o0!*=yh2i^a9zkjp%=7hd(!i_+m&oe*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "spotify-back-8mwvi6nwt-dmitrijs-projects-646539f0.vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "spotify-update.onrender.com"]
 
 
 # Application definition
