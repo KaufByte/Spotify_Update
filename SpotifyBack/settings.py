@@ -58,7 +58,7 @@ MIDDLEWARE = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", 
-    "https://spotify-clone-3xk976h1s-dmitrijs-projects-646539f0.vercel.app",  # Разрешаем запросы с React
+    "https://spotify-clone-fin.vercel.app",  # Разрешаем запросы с React
 ]
 CORS_ALLOW_CREDENTIALS = True
 X_SENDFILE = True
