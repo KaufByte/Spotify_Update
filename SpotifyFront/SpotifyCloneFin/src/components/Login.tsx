@@ -12,15 +12,15 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL || "https://spotify-update.onrender.com/api/";
 
-  // 🔹 Авторизация через Django REST API
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/users/login/", {
+        const response = await fetch(`${API_URL}users/login/`, {  // Динамический URL
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: login, password })
@@ -42,7 +42,7 @@ const Login: React.FC = () => {
     } finally {
         setIsLoading(false);
     }
-};
+  };
 
 
   const signInWithGoogle = async () => {

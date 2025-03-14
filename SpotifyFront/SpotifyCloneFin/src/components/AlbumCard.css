@@ -9,8 +9,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 4rem auto 0 auto; 
-  padding-top: 2rem;
+  margin: 3rem auto 0 auto; 
+  padding-top: 1rem;
   overflow-y: auto; /* 🔥 Вертикальный скролл */
   overflow-x: hidden; /* 🔥 Убираем горизонтальный скролл */
   scrollbar-width: thin; /* 🔥 Тонкий скролл */

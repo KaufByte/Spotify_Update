@@ -206,16 +206,20 @@ const Songs: React.FC<SongsProps> = ({ onSelectSong, searchTerm, selectedArtist,
   const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const API_URL = import.meta.env.VITE_API_URL || 'https://spotify-update.onrender.com/api/';
+
 
   // 🔥 Подключаемся к Django API (вместо json-server)
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        console.log('📡 Отправляем запрос к Django серверу...');
-        const response = await fetch('http://127.0.0.1:8000/api/songs/'); // 👈 Django API
+        console.log(`📡 Отправляем запрос к API: ${API_URL}songs/`);
+        const response = await fetch(`${API_URL}songs/`); // 👈 Используем динамический API_URL
+
         if (!response.ok) {
           throw new Error('Ошибка загрузки песен с сервера');
         }
+
         const data = await response.json();
         console.log('✅ Песни успешно загружены:', data);
         setSongs(data);

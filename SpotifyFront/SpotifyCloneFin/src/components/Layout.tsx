@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Layout.css';
 import { FaHome, FaSearch, FaBell } from 'react-icons/fa';
 import AvatarMenu from './AvatarMenu';
@@ -8,15 +8,8 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ setSearchTerm }) => {
-  const [userEmail, setUserEmail] = useState<string | null>(null); 
-
-  useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-    setUserEmail(email);
-  }, []);
-
   const handleHomeClick = () => {
-    window.location.reload(); // 🔥 Обновление страницы при нажатии
+    window.location.reload();
   };
 
   return (

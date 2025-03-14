@@ -202,7 +202,7 @@ const ErrorText = styled("p")({
   marginTop: "5px",
   textAlign: "center",
 });
-const PasswordValidator = styled("div")(({ theme }) => ({
+const PasswordValidator = styled("div")(({ }) => ({
   marginTop: "10px",
   fontSize: "14px",
   color: "#b3b3b3",
@@ -293,6 +293,7 @@ const Entrance: React.FC = () => {
     hasNumberOrSpecial: false,
     hasMinLength: false,
   });
+  const API_URL = import.meta.env.VITE_API_URL || "https://spotify-update.onrender.com/api/";
   const navigate = useNavigate();
   const monthsMap: { [key: string]: number } = {
     January: 31, February: 28, March: 31, April: 30, May: 31, June: 30,
@@ -316,7 +317,7 @@ const Entrance: React.FC = () => {
     const regex = /^[a-zA-Z0-9@.]+$/;
     setEmailError(regex.test(value) ? "" : "This email is invalid. Make sure it's written like example@email.com ");
   };
-
+  
   const validatePassword = (value: string) => {
     const hasLetter = /[a-zA-Z]/.test(value);
     const hasNumberOrSpecial = /[\d!@#$%^&*()_+=-]/.test(value);
@@ -397,7 +398,7 @@ const Entrance: React.FC = () => {
         gender,
       };
 
-      const response = await fetch("http://127.0.0.1:8000/api/users/", {
+      const response = await fetch(`${API_URL}users/`, {  // Используем API_URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
@@ -608,7 +609,7 @@ const Entrance: React.FC = () => {
         <AuthButton onClick={handleFacebookSignIn} disabled={isLoading}>
           <FaFacebook color="#1877F2" size={22} /> Sign up with Facebook
         </AuthButton>
-
+        {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
         <LoginText>
           Already have an account? <Link to="/login">Log in here</Link>
         </LoginText>

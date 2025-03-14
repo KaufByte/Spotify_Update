@@ -174,7 +174,7 @@ import SpotifyInfo from "./SpotifyInfo";
 
 import './SpotifyPage.css';
 
-const API_URL = 'http://127.0.0.1:8000/api/';
+const API_URL = 'https://spotify-update.onrender.com/api/';
 
 const SpotifyPage: React.FC = () => {
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
@@ -190,24 +190,20 @@ const SpotifyPage: React.FC = () => {
     console.log("📡 Загружаем данные с API...");
 
     Promise.all([
-        fetch(`${API_URL}artists/`).then(res => res.json()),
-        fetch(`${API_URL}albums/`).then(res => res.json()),
-        fetch(`${API_URL}songs/`).then(res => res.json())
+      fetch(`${API_URL}artists/`).then(res => res.json()),
+      fetch(`${API_URL}albums/`).then(res => res.json()),
+      fetch(`${API_URL}songs/`).then(res => res.json())      
     ])
-    .then(([fetchedArtists, fetchedAlbums, fetchedSongs]: [Artist[], Album[], Song[]]) => { // ✅ Исправлено
+    .then(([fetchedArtists, fetchedAlbums, fetchedSongs]: [Artist[], Album[], Song[]]) => {
         console.log("🎤 Исполнители загружены:", fetchedArtists);
         console.log("📀 Альбомы загружены:", fetchedAlbums);
         console.log("🎵 Песни загружены:", fetchedSongs);
 
         setArtists(fetchedArtists);
 
-        // ✅ Добавляем имя исполнителя в каждый альбом с правильной типизацией
-        const albumsWithArtistName = fetchedAlbums.map((album: Album) => {  // ✅ Явно указываем, что album — это Album
-            const artist = fetchedArtists.find((a: Artist) => a.id === album.artist); // ✅ Artist вместо any
-            return {
-                ...album,
-                artistName: artist ? artist.name : "Неизвестный исполнитель",
-            };
+        const albumsWithArtistName = fetchedAlbums.map((album: Album) => {
+            const artist = fetchedArtists.find((a: Artist) => a.id === album.artist);
+            return { ...album, artistName: artist ? artist.name : "Неизвестный исполнитель" };
         });
 
         setAlbums(albumsWithArtistName);
@@ -215,8 +211,7 @@ const SpotifyPage: React.FC = () => {
         setFilteredSongs(fetchedSongs);
     })
     .catch(err => console.error("❌ Ошибка загрузки данных:", err));
-}, []);
-
+  }, []);
 
   const handleSelectArtist = (artist: Artist) => {
     console.log("🎤 Выбран артист:", artist);
