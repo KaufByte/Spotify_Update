@@ -17,7 +17,6 @@ class User(models.Model):
     )
 
     def set_password(self, raw_password):
-        """Хеширует пароль перед сохранением"""
         self.password = make_password(raw_password)
     
     def check_password(self, raw_password):
