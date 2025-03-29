@@ -5,16 +5,42 @@ from django.contrib.auth.hashers import make_password
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'username', 'date_of_birth', 'gender']
+        fields = ['id', 'email', 'password', 'username', 'date_of_birth', 'gender','subscribed_artists','favorite_songs']
         extra_kwargs = {'password': {'write_only': True}}  
 
     def create(self, validated_data):
+        subscribed_artists_data = validated_data.pop('subscribed_artists',[])
+        favorite_songs_data = validated_data.pop('favorite_songs',[])
         password = validated_data.pop("password", None)
         user = User(**validated_data)
         if password:
             user.set_password(password)  
         user.save()
+
+        user.subscribed_artists.set(subscribed_artists_data)
+        user.favorite_songs.set(favorite_songs_data)
+        user.save()
         return user
+
+    def update(self,instance,validate_data):
+        subscribed_artists_data = validate_data.pop('subscribed_artists',None)
+        favorite_songs_data = validate_data.pop('favorite_songs_data', None)
+
+        if 'password' in validate_data:
+            password = validate_data.pop('password')
+            instance.set_password(password)
+        
+        for attr, value in validate_data.items():
+            setattr(instance,attr,value)
+        instance.save()
+
+        if subscribed_artists_data is not None:
+            instance.subscribed_artists.set(subscribed_artists_data)
+        if favorite_songs_data is not None:
+            instance.favorite_songs.set(favorite_songs_data)
+        
+        return instance
+
 
 
 

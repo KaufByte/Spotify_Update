@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
 from .models import User,Album,Song,Artist
 from .serializers import UserSerializer,AlbumSerializer,SongSerializer,ArtistSerializer
@@ -89,3 +89,32 @@ def delete_artist_by_id(request, artist_id):
     except Artist.DoesNotExist:
         return Response({"error": "Artist not found"}, status=status.HTTP_404_NOT_FOUND)
     
+# --- Toggle подписка ---
+@api_view(['POST'])
+def toggle_artist_subscription(request, user_id, artist_id):
+    user = get_object_or_404(User, id=user_id)
+    artist = get_object_or_404(Artist, id=artist_id)
+    if artist in user.subscribed_artists.all():
+        user.subscribed_artists.remove(artist)
+        return Response({"message": "unsubscribed"})
+    user.subscribed_artists.add(artist)
+    return Response({"message": "subscribed"})
+
+# --- Toggle избранного ---
+@api_view(['POST'])
+def toggle_favorite_song(request, user_id, song_id):
+    user = get_object_or_404(User, id=user_id)
+    song = get_object_or_404(Song, id=song_id)
+    if song in user.favorite_songs.all():
+        user.favorite_songs.remove(song)
+        return Response({"message": "removed from favorites"})
+    user.favorite_songs.add(song)
+    return Response({"message": "added to favorites"})
+
+# --- Библиотека ---
+@api_view(['GET'])
+def get_library(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    artists = ArtistSerializer(user.subscribed_artists.all(), many=True).data
+    songs = SongSerializer(user.favorite_songs.all(), many=True, context={'request': request}).data
+    return Response({"subscribed_artists": artists, "favorite_songs": songs})

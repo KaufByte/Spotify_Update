@@ -1,1 +1,1 @@
-CREATE DATABASE defaultdb;
+DROP TABLE spotify_back_user_favorite_songs;
