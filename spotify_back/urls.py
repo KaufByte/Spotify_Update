@@ -1,4 +1,4 @@
-# spotify_back/urls.py
+
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, AlbumViewSet, SongViewSet, ArtistViewSet, delete_artist_by_id

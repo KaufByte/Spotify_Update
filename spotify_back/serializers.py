@@ -50,7 +50,7 @@ from .models import Song
 
 class SongSerializer(serializers.ModelSerializer):
     music_file_url = serializers.SerializerMethodField()
-    fullscreen_image = serializers.ImageField(required=False)  
+    fullscreen_image = serializers.ImageField(required=False)
 
     class Meta:
         model = Song
